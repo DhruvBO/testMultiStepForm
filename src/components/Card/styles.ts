@@ -33,7 +33,7 @@ const styles: {
   progressBar: {
     margin: "15% 0 18% 0",
     backgroundColor: "#e6e6e6",
-    width: "80%",
+    // width: "100%",
     borderRadius: "15px",
   },
   progress: {
@@ -61,6 +61,8 @@ const styles: {
     transform: "rotate(45deg)",
     float: "right",
   },
+
+
 };
 
 export default styles;

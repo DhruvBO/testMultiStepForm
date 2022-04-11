@@ -5,16 +5,8 @@ const Header = () => {
   return (
     <Box>
       <Box sx={styles.header}>
-        <Box sx={styles.heading} component="h1">Two Step Form</Box>
+        <Box sx={styles.heading} component="h1">Multi-Step Form</Box>
       </Box>
-      {/* <Box sx={styles.Form}>
-        <Box sx={styles.formBtnWrapper}>
-          <Button sx={styles.formBtn}>Basic Info</Button>
-        </Box>
-        <Box sx={styles.formBtnWrapper}>
-          <Button sx={styles.formBtn}>Professional Info</Button>
-        </Box>
-      </Box> */}
     </Box>
   );
 };

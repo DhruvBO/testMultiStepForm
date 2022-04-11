@@ -19,8 +19,8 @@ const emailError = {
 const phoneNoError = {
   required: "This field is required.",
   reqVal: true, 
-  min: "You are not eligible.",
-  max: "You are not eligible",
+  min: "Please provide 10 digit phone number.",
+  max: "Please provide 10 digit phone number.",
   minVal: 1000000000,
   maxVal: 9999999999,
 };

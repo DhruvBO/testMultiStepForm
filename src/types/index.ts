@@ -8,3 +8,9 @@ export type typeBasicFormData = {
 //   pNo: number;
   address: string;
 };
+
+export type typeDepartmentOption = {
+  optionA: string;
+  optionB: string;
+  optionC: string;
+};

@@ -7,33 +7,29 @@ import { useForm } from "react-hook-form";
 import InputField from "../../sections/form/InputField/Index";
 import { nameError } from "../../../constants/formErrorMessage";
 import { formTrackerForwardCount, workInData } from "../../../redux/actions";
-import { useAppDispatch } from "../../../redux/store";
+import { useAppDispatch, useAppSelector } from "../../../redux/store";
 const WorkIn = () => {
   const dispatch = useAppDispatch();
+
+  const persistedData = useAppSelector((state) => state.formData);
   const { control, handleSubmit, watch, setValue, reset } = useForm({
     mode: "onChange",
   });
 
-  const watchItems = watch();
-  // console.log(watchItems);
-  useEffect(() => {
-    if (Object.keys(watchItems).length !== 0) {
-      localStorage.setItem("workFormData", JSON.stringify(watchItems));
-    }
-  }, [watchItems]);
-
-  const gerFormData = () => {
-    const localValues = localStorage.getItem("workFormData");
-    if (localValues) {
-      const values = JSON.parse(localValues);
-      // setStoredValues(JSON.parse(localValues));
-      setValue("cName", values?.cName);
-      setValue("jobTitle", values?.jobTitle);
-    }
+  const fillPersistedFormData = () => {
+    setValue("cName", persistedData.workIn?.cName);
+    setValue("jobTitle", persistedData?.workIn?.jobTitle);
   };
   useEffect(() => {
-    gerFormData();
+    if (Object.keys(persistedData).length !== 0) fillPersistedFormData();
   }, []);
+
+  const watchItems = watch();
+  useEffect(() => {
+    if (Object.keys(watchItems).length !== 0) {
+      dispatch(workInData(watchItems));
+    }
+  }, [watchItems]);
 
   function onClickHandler(data: any) {
     dispatch(workInData(data));

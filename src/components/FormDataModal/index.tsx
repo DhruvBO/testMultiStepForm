@@ -5,7 +5,7 @@ import styles from "./styles";
 const FormDataModal = () => {
   const formData = useAppSelector((state) => state.formData);
   const [open, setOpen] = React.useState(true);
-  // const handleOpen = () => setOpen(false);
+  // const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   return (
     <>
@@ -21,7 +21,7 @@ const FormDataModal = () => {
             FormData
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            {formData.about.fName} {formData.about.lName} 
+            {formData.about?.fName} {formData.about?.lName} 
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             {formData.department}
@@ -30,10 +30,10 @@ const FormDataModal = () => {
             {formData.lookingFor}
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            {formData.workIn.cName} - {formData.workIn.jobTitle}
+            {formData.workIn?.cName} - {formData.workIn?.jobTitle}
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            {formData.contact.email} - {formData.contact.pNo} 
+            {formData.contact?.email} - {formData.contact?.pNo} 
           </Typography>
         </Box>
       </Modal>

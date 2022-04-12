@@ -9,8 +9,6 @@ export type typeBasicFormData = {
   address: string;
 };
 
-export type typeDepartmentOption = {
-  optionA: string;
-  optionB: string;
-  optionC: string;
-};
+export type typeDepartmentOption = Array<string>
+
+export type typeLookingForOption = Array<string>

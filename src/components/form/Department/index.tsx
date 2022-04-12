@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Card from "../../Card";
-import OptionBtn from "../../buttons/CustomBtn";
+import CustomBtn from "../../buttons/CustomBtn";
 import { Box } from "@mui/material";
 import styles from "../styles";
-import { useAppDispatch } from "../../../redux/store";
+import { useAppDispatch, useAppSelector } from "../../../redux/store";
 import {
   departmentData,
   formTrackerForwardCount,
@@ -12,60 +12,50 @@ import { departmentDefaultLabel } from "../../../constants/formDefaultValue";
 
 const Department = () => {
   const dispatch = useAppDispatch();
- /*  const [isSelected, setSelected] = useState(
-    [
-      {
-        optionA: 
-          {
-            value: departmentDefaultLabel.optionA,
-            selected: false,
-          },
-      },
-      {
-        optionB: 
-          {
-            value: departmentDefaultLabel.optionA,
-            selected: false,
-          },
-      },
-      {
-        optionC: 
-        {
-          value: departmentDefaultLabel.optionA,
-          selected: false,
-        },
-      },
-  ]); */
 
-
+  const selectedLabel = useAppSelector((state) => state.formData.department);
 
   const gerFormData = () => {
     const localValue = localStorage.getItem("departmentFormData");
     if (localValue) {
-      // const values = JSON.parse(localValues);
-      // console.log(localValues)
-      /* isSelected.map((option) => {
-        if (option === localValue ) {
-          setSelected([{...isSelected }, {option.selected : true} ])
-        }
-      } */
-      console.log(localValue);
+      console.log("after getting", localValue);
     }
   };
   useEffect(() => {
     gerFormData();
   }, []);
 
-  function onCLickHandler(selectedOption: string) {
+  function onClickHandler(selectedOption: string) {
     console.log(selectedOption);
     dispatch(departmentData(selectedOption));
     dispatch(formTrackerForwardCount());
-    localStorage.setItem("departmentFormData", selectedOption);
+    // localStorage.setItem("departmentFormData", selectedOption);
   }
 
   return (
     <Card content="Great! what department do you work in?">
-      <Box sx={styles.btnWrapper}>
+      {departmentDefaultLabel.map((label) => {
+        console.log(label, selectedLabel)
+        if (label === selectedLabel) {
+          return (
+            <Box sx={styles.btnWrapper} key={label}>
+              <CustomBtn
+                color="#23bf08"
+                label={label}
+                onClick={() => onClickHandler(label)}
+                
+              />
+            </Box>
+          );
+        } else {
+          return (
+            <Box sx={styles.btnWrapper} key={label}>
+              <CustomBtn label={label}  onClick={() => onClickHandler(label)} />
+            </Box>
+          );
+        }
+      })}
+      {/* <Box sx={styles.btnWrapper}>
         <OptionBtn
           label={departmentDefaultLabel.optionA}
           onClick={() => onCLickHandler(departmentDefaultLabel.optionA)}
@@ -82,7 +72,7 @@ const Department = () => {
           label={departmentDefaultLabel.optionC}
           onClick={() => onCLickHandler(departmentDefaultLabel.optionC)}
         />
-      </Box>
+      </Box> */}
     </Card>
   );
 };

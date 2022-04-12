@@ -12,10 +12,16 @@ import {
 import FormDataModal from "../src/components/FormDataModal";
 import { Box } from "@mui/system";
 import { useAppSelector } from "../src/redux/store";
+import CustomBtn from "../src/components/buttons/CustomBtn";
+import { useEffect, useState } from "react";
 
 const Home: NextPage = () => {
   const count = useAppSelector((state) => state.formData.formTracker);
 
+  const onClickHadler = () => {
+    localStorage.clear();
+    window.location.reload();
+  };
   switch (count) {
     case 1:
       return <LookingFor />;
@@ -29,7 +35,15 @@ const Home: NextPage = () => {
       return <WorkIn />;
 
     default:
-      return <FormDataModal />;
+      return (
+        <Box>
+          <FormDataModal />
+          <CustomBtn
+            onClick={() => onClickHadler()}
+            label={" Fill a new form"}
+          />
+        </Box>
+      );
   }
 };
 

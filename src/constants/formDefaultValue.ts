@@ -1,4 +1,8 @@
-import { typeBasicFormData, typeDepartmentOption } from "../types";
+import {
+  typeBasicFormData,
+  typeDepartmentOption,
+  typeLookingForOption,
+} from "../types";
 
 export const basicFormDefaultValue: typeBasicFormData = {
   fName: "",
@@ -11,8 +15,14 @@ export const basicFormDefaultValue: typeBasicFormData = {
   address: "",
 };
 
-export const departmentDefaultLabel: typeDepartmentOption = {
-  optionA: "Marketing",
-  optionB: "Sales",
-  optionC: "Customer Service",
-};
+export const departmentDefaultLabel: typeDepartmentOption = [
+  "Marketing",
+  "Sales",
+  "Customer Service",
+];
+
+export const lookingForLabel: typeLookingForOption = [
+   "Lead generation bots",
+  "Multi-step forms",
+   "Integations",
+];

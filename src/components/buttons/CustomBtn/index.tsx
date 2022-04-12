@@ -5,10 +5,11 @@ import styles from "./styles";
 type typeProps = {
   label: string;
   onClick: () => void;
+  color? : string;
 };
-const CustomBtn = ({ label, onClick }: typeProps) => {
+const CustomBtn = ({ label, onClick, color }: typeProps) => {
   return (
-    <Button sx={styles.btn} variant="contained" onClick={onClick}>
+    <Button sx={{...styles.btn, backgroundColor: `${color}`}}  variant="contained" onClick={onClick}>
       {label}
     </Button>
   );

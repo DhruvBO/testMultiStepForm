@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import React,  { useEffect } from "react";
+import React, { useEffect } from "react";
 import styles from "../styles";
 import Card from "../../Card";
 import CustomBtn from "../../buttons/CustomBtn";
@@ -7,46 +7,31 @@ import { useForm } from "react-hook-form";
 import InputField from "../../sections/form/InputField/Index";
 import { nameError } from "../../../constants/formErrorMessage";
 import { aboutData, formTrackerForwardCount } from "../../../redux/actions";
-import { useAppDispatch } from "../../../redux/store";
-
-// type typeAboutForm = {
-//   fName: string,
-//   lName: string,
-// }
+import { useAppDispatch, useAppSelector } from "../../../redux/store";
 
 const About = () => {
- /*  const [storedValues, setStoredValues] = useState<typeAboutForm>({
-    fName : "",
-    lName: "",
-  });  */
   const dispatch = useAppDispatch();
+  const persistedData = useAppSelector((state) => state.formData);
   const { control, handleSubmit, watch, setValue, reset } = useForm({
     mode: "onChange",
   });
 
+  const fillPersistedFormData = () => {
+    setValue("fName", persistedData.about?.fName);
+    setValue("lName", persistedData?.about?.lName);
+  };
+  useEffect(() => {
+    if (Object.keys(persistedData).length !== 0) fillPersistedFormData();
+  }, []);
+
   const watchItems = watch();
-  // console.log(watchItems);
   useEffect(() => {
     if (Object.keys(watchItems).length !== 0) {
-      localStorage.setItem("aboutFormData", JSON.stringify(watchItems));
+      dispatch(aboutData(watchItems));
     }
   }, [watchItems]);
 
-  const gerFormData = () => {
-    const localValues = localStorage.getItem("aboutFormData");
-    if (localValues) {
-      const values = JSON.parse(localValues);
-      // setStoredValues(JSON.parse(localValues));
-      setValue("fName", values?.fName);
-      setValue("lName", values?.lName);
-    }
-  };
-  useEffect(() => {
-    gerFormData();
-  }, []);
-
   function onClickHandler(data: any) {
-    dispatch(aboutData(data));
     dispatch(formTrackerForwardCount());
   }
   return (

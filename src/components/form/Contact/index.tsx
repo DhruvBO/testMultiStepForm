@@ -6,35 +6,29 @@ import CustomBtn from "../../buttons/CustomBtn";
 import { useForm } from "react-hook-form";
 import InputField from "../../sections/form/InputField/Index";
 import { emailError, phoneNoError } from "../../../constants/formErrorMessage";
-import { useAppDispatch } from "../../../redux/store";
+import { useAppDispatch, useAppSelector } from "../../../redux/store";
 import { contactData, formTrackerForwardCount } from "../../../redux/actions";
 const Contact = () => {
   const dispatch = useAppDispatch();
+
+  const persistedData = useAppSelector((state) => state.formData);
   const { control, handleSubmit, watch, setValue, reset } = useForm({
     mode: "onChange",
   });
-
-
-  const watchItems = watch();
-  // console.log(watchItems);
-  useEffect(() => {
-    if (Object.keys(watchItems).length !== 0) {
-      localStorage.setItem("contactFormData", JSON.stringify(watchItems));
-    }
-  }, [watchItems]);
-
-  const gerFormData = () => {
-    const localValues = localStorage.getItem("contactFormData");
-    if (localValues) {
-      const values = JSON.parse(localValues);
-      // setStoredValues(JSON.parse(localValues));
-      setValue("email", values?.email);
-      setValue("pNo", values?.pNo);
-    }
+  const fillPersistedFormData = () => {
+    setValue("email", persistedData.contact?.email);
+    setValue("pNo", persistedData?.contact?.pNo);
   };
   useEffect(() => {
-    gerFormData();
+    if (Object.keys(persistedData).length !== 0) fillPersistedFormData();
   }, []);
+
+  const watchItems = watch();
+  useEffect(() => {
+    if (Object.keys(watchItems).length !== 0) {
+      dispatch(contactData(watchItems));
+    }
+  }, [watchItems]);
 
   function onClickHandler(data: any) {
     dispatch(contactData(data));
